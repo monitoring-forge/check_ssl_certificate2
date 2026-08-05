@@ -1,18 +1,19 @@
 VERSION=0.0.8
-LDFLAGS=-ldflags "-w -s -X main.version=${VERSION} "
+GITCOMMIT?=$(shell git describe --dirty --always 2>/dev/null)
+LDFLAGS=-ldflags "-w -s -X main.version=${VERSION} -X main.commit=${GITCOMMIT}"
 
 all: check_ssl_certificate2
 
 .PHONY: check_ssl_certificate2
 
-check_ssl_certificate2: main.go certificate.go
-	go build $(LDFLAGS) -o check_ssl_certificate2 certificate.go main.go
+check_ssl_certificate2: *.go
+	go build $(LDFLAGS) -o check_ssl_certificate2
 
-linux: main.go certificate.go
-	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o check_ssl_certificate2 certificate.go main.go
+linux: *.go
+	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o check_ssl_certificate2
 
 check:
-	go test ./...
+	go test -v ./...
 
-fmt:
-	go fmt ./...
+lint:
+	golangci-lint run --timeout 5m ./...

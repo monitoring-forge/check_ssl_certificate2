@@ -3,40 +3,49 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 
 	"github.com/jessevdk/go-flags"
 )
 
 var version string
+var commit string
 
-const UNKNOWN = 3
-const CRITICAL = 2
-const WARNING = 1
-const OK = 0
-
-func printVersion() {
-	fmt.Printf(`%s Compiler: %s %s`,
-		version,
-		runtime.Compiler,
-		runtime.Version())
-}
+const (
+	OK = iota
+	WARNING
+	CRITICAL
+	UNKNOWN
+)
 
 func main() {
 	os.Exit(_main())
 }
 
 func _main() int {
-	opt := Opt{}
-	psr := flags.NewParser(&opt, flags.Default)
+	opt := &Opt{}
+	psr := flags.NewParser(opt, flags.HelpFlag|flags.PassDoubleDash)
 	_, err := psr.Parse()
-	if err != nil {
-		os.Exit(UNKNOWN)
-	}
-
 	if opt.Version {
-		printVersion()
+		if commit == "" {
+			commit = "dev"
+		}
+		fmt.Printf(
+			"%s-%s\n%s/%s, %s, %s\n",
+			filepath.Base(os.Args[0]),
+			version,
+			runtime.GOOS,
+			runtime.GOARCH,
+			runtime.Version(),
+			commit)
 		return OK
+	} else if flags.WroteHelp(err) {
+		fmt.Fprintf(os.Stdout, "%v\n", err)
+		return OK
+	} else if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return UNKNOWN
 	}
 
 	if opt.TCP4 && opt.TCP6 {

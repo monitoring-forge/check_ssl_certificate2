@@ -57,14 +57,18 @@ func (opt *Opt) Fetch() ([]*x509.Certificate, error) {
 			ch <- err
 			return
 		}
-		defer conn.Close()
+		defer func() {
+			_ = conn.Close()
+		}()
 		tlsconn := tls.Client(conn, tlsConfig)
 		err = tlsconn.Handshake()
 		if err != nil {
 			ch <- err
 			return
 		}
-		defer tlsconn.Close()
+		defer func() {
+			_ = tlsconn.Close()
+		}()
 
 		certs = tlsconn.ConnectionState().PeerCertificates
 		ch <- nil
@@ -97,7 +101,7 @@ func (opt *Opt) Verify() (string, error) {
 	displayServer := fmt.Sprintf(`%s port %d sni %s`, opt.Hostname, opt.Port, displaySNI)
 
 	if err != nil {
-		return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: %v on %s", err, displayServer)
+		return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: %w on %s", err, displayServer)
 	}
 
 	cert := certs[0]
@@ -110,9 +114,9 @@ func (opt *Opt) Verify() (string, error) {
 		for _, c := range certs[1:] {
 			verifyOpt.Intermediates.AddCert(c)
 		}
-		verifiedChains, err := certs[0].Verify(verifyOpt)
-		if err != nil {
-			return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: failed verify chains [%v] on %s", err, displayServer)
+		verifiedChains, errVerify := certs[0].Verify(verifyOpt)
+		if errVerify != nil {
+			return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: failed verify chains [%w] on %s", errVerify, displayServer)
 		}
 		if len(verifiedChains) == 0 {
 			return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: failed verify chains [%v] on %s", "no verified chains", displayServer)
@@ -120,9 +124,8 @@ func (opt *Opt) Verify() (string, error) {
 	}
 
 	if opt.VerifySNI {
-		err := cert.VerifyHostname(opt.SNI)
-		if err != nil {
-			return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: failed verify hostname [%v] on %s", err, displayServer)
+		if errVerifyHostname := cert.VerifyHostname(opt.SNI); errVerifyHostname != nil {
+			return "", fmt.Errorf("SSL CERTIFICATE CRITICAL: failed verify hostname [%w] on %s", errVerifyHostname, displayServer)
 		}
 	}
 
