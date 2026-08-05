@@ -27,7 +27,7 @@ func newOpt(h string) Opt {
 func retryWithVerfy(opt Opt, retry int) (string, error) {
 	var err error
 	var msg string
-	for i := 0; i < retry; i++ {
+	for range retry {
 		msg, err = opt.Verify()
 		if err == nil {
 			return msg, nil
