@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.0.9](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.8...v0.0.9) - 2026-08-05
+
+- ci: bump the dependencies group with 3 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/24
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/25
+- fix: resolve lint issues and improve error handling in certificate verification by @kazeburo in https://github.com/monitoring-forge/check_ssl_certificate2/pull/27
+- docs: enhance README with detailed features, usage examples, and exit… by @kazeburo in https://github.com/monitoring-forge/check_ssl_certificate2/pull/28
+
 ## [v0.0.8](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.7...v0.0.8) - 2026-07-22
 
 - respository transfer and refactor long function by @kazeburo in https://github.com/monitoring-forge/check_ssl_certificate2/pull/22
