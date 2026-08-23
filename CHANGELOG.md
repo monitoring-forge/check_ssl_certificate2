@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.0.10](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.9...v0.0.10) - 2026-08-23
+
+- go: bump github.com/stretchr/testify from 1.11.1 to 1.12.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/31
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/29
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/33
+- refactor: simplify main function and improve error handling in option… by @kazeburo in https://github.com/monitoring-forge/check_ssl_certificate2/pull/34
+
 ## [v0.0.9](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.8...v0.0.9) - 2026-08-05
 
 - ci: bump the dependencies group with 3 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/24
