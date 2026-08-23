@@ -1,10 +1,8 @@
 VERSION=0.0.9
-GITCOMMIT?=$(shell git describe --dirty --always 2>/dev/null)
-LDFLAGS=-ldflags "-w -s -X main.version=${VERSION} -X main.commit=${GITCOMMIT}"
-
+LDFLAGS=-ldflags "-w -s -X main.version=${VERSION}"
 all: check_ssl_certificate2
 
-.PHONY: check_ssl_certificate2
+.PHONY: check_ssl_certificate2 linux check lint
 
 check_ssl_certificate2: *.go
 	go build $(LDFLAGS) -o check_ssl_certificate2
