@@ -3,66 +3,40 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-	"runtime"
 
-	"github.com/jessevdk/go-flags"
+	"github.com/monitoring-forge/flagrun"
 )
 
 var version string
-var commit string
 
-const (
-	OK = iota
-	WARNING
-	CRITICAL
-	UNKNOWN
-)
-
-func main() {
-	os.Exit(_main())
-}
-
-func _main() int {
-	opt := &Opt{}
-	psr := flags.NewParser(opt, flags.HelpFlag|flags.PassDoubleDash)
-	_, err := psr.Parse()
-	if opt.Version {
-		if commit == "" {
-			commit = "dev"
-		}
-		fmt.Printf(
-			"%s-%s\n%s/%s, %s, %s\n",
-			filepath.Base(os.Args[0]),
-			version,
-			runtime.GOOS,
-			runtime.GOARCH,
-			runtime.Version(),
-			commit)
-		return OK
-	} else if flags.WroteHelp(err) {
-		fmt.Fprintf(os.Stdout, "%v\n", err)
-		return OK
-	} else if err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
-		return UNKNOWN
-	}
-
+func (opt *Opt) verifyOptions() error {
 	if opt.TCP4 && opt.TCP6 {
-		fmt.Printf("Both tcp4 and tcp6 are specified\n")
-		return UNKNOWN
+		return fmt.Errorf("both tcp4 and tcp6 are specified")
 	}
 
 	if opt.VerifySNI && opt.SNI == "" {
-		fmt.Printf("--sni is required when use --verify-sni\n")
-		return UNKNOWN
+		return fmt.Errorf("--sni is required when use --verify-sni")
+	}
+	return nil
+}
+
+func (opt *Opt) Run(_ []string) (any, int) {
+	err := opt.verifyOptions()
+	if err != nil {
+		// options are invalid, return UNKNOWN status and print the error message to stderr
+		return err, flagrun.UNKNOWN
 	}
 
 	msg, err := opt.Verify()
 	if err != nil {
+		// ssl verification failed, return CRITICAL status and print the error message to stdout
 		fmt.Println(err.Error())
-		return CRITICAL
+		return "", flagrun.CRITICAL
 	}
 	fmt.Println(msg)
-	return OK
+	return "", flagrun.OK
+}
+
+func main() {
+	os.Exit(flagrun.Go(&Opt{}, flagrun.Version(version)))
 }
