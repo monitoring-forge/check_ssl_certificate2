@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.0.11](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.10...v0.0.11) - 2026-09-19
+
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/36
+- go: bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/39
+- ci: bump Songmu/tagpr from 1.20.1 to 1.20.3 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/41
+
 ## [v0.0.10](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.9...v0.0.10) - 2026-08-23
 
 - go: bump github.com/stretchr/testify from 1.11.1 to 1.12.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/31
