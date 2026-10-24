@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.0.11](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.10...v0.0.11) - 2026-10-24
+
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/36
+- go: bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/39
+- ci: bump Songmu/tagpr from 1.20.1 to 1.20.3 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/41
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/42
+- ci: bump Songmu/tagpr from 1.20.3 to 1.21.2 in the tagpr group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/45
+- go: bump golang.org/x/sys from 0.48.0 to 0.49.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/44
+- ci: bump Songmu/tagpr from 1.21.2 to 1.21.3 in the tagpr group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/46
+- ci: bump the dependencies group with 2 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/47
+
 ## [v0.0.10](https://github.com/monitoring-forge/check_ssl_certificate2/compare/v0.0.9...v0.0.10) - 2026-08-23
 
 - go: bump github.com/stretchr/testify from 1.11.1 to 1.12.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_ssl_certificate2/pull/31
